@@ -19,7 +19,7 @@ public class Receiver {
 			
 			System.out.println("Server messaged: " + in.readUTF());
 			client.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

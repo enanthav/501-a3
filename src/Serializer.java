@@ -11,13 +11,25 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 public class Serializer {
-	
-	public org.jdom2.Document serialize(Object obj) {
+	private IdentityHashMap<Integer, Object> map;
+	private Element root;
+	private Document doc;
 
-		// take in object
-		// load class
-		// create XML document that can be saved
-		return null;
+	public Serializer() {
+		map = new IdentityHashMap<Integer, Object>();
+		root = new Element("serialized");
 	}
-	
+
+	public org.jdom2.Document serialize(Object obj) {
+		try {
+			Document doc = new Document(root);
+
+			// take in object
+			// create XML document that can be saved
+
+		}
+		return doc;
+	}
+
+
 }

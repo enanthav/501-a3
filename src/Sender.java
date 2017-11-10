@@ -59,7 +59,6 @@ public class Sender extends Thread {
 		try {
 			Thread t = new Sender(port);
 			t.start();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
