@@ -8,4 +8,9 @@ public class ObjectClass {
     public ObjectClass(PrimitiveClass cls) {
         primObj = class;
     }
+
+
+	public ObjectClass() {
+		// TODO Auto-generated constructor stub
+	}
 }

@@ -12,6 +12,11 @@ public class PrimitiveClass {
 	}
 			
 
+	public PrimitiveClass() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public int getInteger() {
 		return integer;
 	}
