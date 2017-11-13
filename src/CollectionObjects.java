@@ -1,4 +1,4 @@
-ipmort java.util.ArrayList;
+import java.util.ArrayList;
 
 public class CollectionObjects {
     private ArrayList<Object> list;

@@ -11,11 +11,6 @@ public class PrimitiveClass {
 		bool = input3;
 	}
 			
-	// create an object that contains an array of primitives
-	public PrimitiveClass(int input1, int input2, int input3) {
-		int[] intArray = {input1, input3, input3};
-	}
-	
 
 	public int getInteger() {
 		return integer;

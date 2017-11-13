@@ -1,7 +1,12 @@
 public class ArrayObjects {
-    public Object[] arrayOfObjRef;
+    private Object[] arrayOfObjRef;
+
     public ArrayObjects() {
-        arrayObjects = new Object[2];
+        arrayObjects = new Object[6];
+    }
+
+    public void addObjectToArray(Object value, int i) {
+        arrayOfObjRef[i] = value;
     }
 
 }
