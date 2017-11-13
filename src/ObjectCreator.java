@@ -10,7 +10,7 @@ public class ObjectCreator {
 		System.out.println("[2] Object that contains References to Other Objects");
 		System.out.println("[3] Object that Contains a Three Integer Array");
 		System.out.println("[4] Object that Contains an Array of References");
-		System.out.println("[5] Object using Instance of Collection Class\n");
+		System.out.println("[5] Object using Collection Instance\n");
 		
 		try {
 			selection = input.nextInt();
