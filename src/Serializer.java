@@ -28,6 +28,8 @@ public class Serializer {
 			// take in object
 			// create XML document that can be saved
 
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 		return doc;
 	}

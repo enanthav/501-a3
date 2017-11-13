@@ -1,3 +1,4 @@
+package obj;
 
 public class PrimitiveArrayClass {
     // create an object that contains an array of primitives

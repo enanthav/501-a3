@@ -1,3 +1,4 @@
+package obj;
 public class ObjectRef {
     private PrimitiveClass primObj;
     private int intVar;
@@ -9,7 +10,7 @@ public class ObjectRef {
     public void setIntVar (int i) {
         intVar = i;
     }
-
+    
     public void setPrimObj (PrimitiveClass primObj2) {
         this.primObj = primObj;
     }

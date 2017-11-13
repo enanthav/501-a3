@@ -1,3 +1,4 @@
+package obj;
 
 public class ObjectClass {
     public PrimitiveClass primObj;
@@ -6,7 +7,7 @@ public class ObjectClass {
 
 
     public ObjectClass(PrimitiveClass cls) {
-        primObj = class;
+        primObj = cls;
     }
 
 
