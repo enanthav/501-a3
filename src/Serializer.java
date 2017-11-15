@@ -1,9 +1,12 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 
@@ -16,107 +19,104 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 public class Serializer {
-	private Integer id;
-	private IdentityHashMap<Integer, Object> map;
-	private Element root;
-	private Document doc;
 
-	public Serializer() {
-		id = 0;
-		map = new IdentityHashMap<Integer, Object>();
-		root = new Element("serialized");
+
+	public org.jdom2.Document serialize(Object obj) throws IllegalArgumentException, IllegalAccessException {
+		IdentityHashMap map = new IdentityHashMap();
+		Element root = new Element("serialized");
+		Document doc = new Document(root);
+		return serializeHelper(obj, doc, map);
 	}
+	
 
-	public org.jdom2.Document serialize(Object obj) {
-		// serialize obj
-		// serialize field
-		// serialize rimitive
-		// serialize obj ref
-		// serialize array obj
-		
-		try {
-			
-			// serialize object
-			Document doc = new Document(root);
-			// serialize fields
-			root.addContent(serializeHelper(obj));
-			XMLOutputter xmlOutput = new XMLOutputter();
-			String output = xmlOutput.outputString(doc);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return doc;
-	}
-
-	public Element serializeHelper(Object obj) {
-		Field[] fields = obj.getClass().getDeclaredFields();
+	public Document serializeHelper(Object obj, Document doc, IdentityHashMap map) throws IllegalArgumentException, IllegalAccessException {
+		Class<?> c = obj.getClass();
+		String id = Integer.toString(map.size());
+		map.put(obj, id);
 		// add new node
 		Element node = new Element("object");
-		node.setAttribute("class", obj.getClass().getSimpleName());
-		node.setAttribute("id", String.valueOf(id));
+		node.setAttribute("class", c.getSimpleName());
+		node.setAttribute("id", Integer.toString(map.size()-1));
+		doc.getRootElement().addContent(node);
 		
-		map.put(id, obj);
-		id++; 
+		
 		// check if array
-		if (obj.getClass().isArray()) {
-			node.setAttribute("length", String.valueOf(Array.getLength(obj)));
+		if (c.isArray()) {
+			node.setAttribute("length", Integer.toString(Array.getLength(obj)));
 			// check if primitive
-			if (obj.getClass().getComponentType().isPrimitive()) {
+			if (c.getComponentType().isPrimitive()) {
+
 	    		for (int i = 0; i < Array.getLength(obj); i++) {
+					System.out.println(Array.get(obj, i));
 	    			Element arrayElement = new Element("value");
-	    			arrayElement.setText(Array.get(obj,  i).toString());
+	    			arrayElement.setText(Array.get(obj, i).toString());
 	    			node.addContent(arrayElement);
 	    		}
 			} else { // obj references
 	    		for (int i = 0; i < Array.getLength(obj); i++) {
-	    			Element arrayObjRef = new Element("reference");
-	    			if (map.containsKey(Array.get(obj, i))) { // check if obj already in map
-	    				arrayObjRef.setText(String.valueOf(map.get(Array.get(obj, i)).toString()));
-	    			} else { // assign new id
-	    				arrayObjRef.setText(String.valueOf(map.size()));
-	    			}
+	    			if (Array.get(obj, i) != null) {
+		    			Element arrayObjRef = new Element("reference");
+		    			if (map.containsKey(Array.get(obj, i))) { // check if obj already in map
+		    				arrayObjRef.setText(map.get(Array.get(obj, i)).toString());
+		    			} else { // assign new id
+		    				arrayObjRef.setText(String.valueOf(map.size()));
+	    					serializeHelper(Array.get(obj, i), doc, map);
+		    			}
+		    			node.addContent(arrayObjRef);
+		    		}
 	    		}
 			}
-
-		}
-		
+			
+			
+			
+			
+			
+		} else { // not an array
+			Field[] fields = c.getDeclaredFields();
+			// will need to check if primitive or obj ref
+			for (Field f : fields) {
+				f.setAccessible(true);
 	
-		
-		// will need to check if primitive or obj ref
-		for (Field f : fields) {
-			f.setAccessible(true);
+				Element fieldElement = new Element("field");
+				fieldElement.setAttribute("name", f.getName());
+				fieldElement.setAttribute("declaringclass", f.getDeclaringClass().getSimpleName());
 
-			Element fieldElement = new Element("field");
-			fieldElement.setAttribute("name", f.getName());
-			fieldElement.setAttribute("declaringclass", f.getDeclaringClass().getSimpleName());
 
-			// check if primitive
-			if (f.getType().isPrimitive()) {
-				try {
-					Element val = new Element("value");
-					val.setText(f.get(obj).toString());
-					fieldElement.addContent(val);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else { // obj reference
-				try {
-					Element ref = new Element("reference");
-					if (map.containsKey(f.get(obj))) {
-						// already exists in Identity Map
-						ref.setText(String.valueOf(map.get(f.get(obj)).toString()));
-					} else {
-						ref.setText(String.valueOf(map.size()));
+				if (f.get(obj) != null) {
+					if (f.getType().isPrimitive()) { // check if primitive
+						Element val = new Element("value");
+						val.setText(f.get(obj).toString());
+						fieldElement.addContent(val);
+					} else { // obj reference
+						Element ref = new Element("reference");
+						if (map.containsKey(f.get(obj))) {
+							// already exists in Identity Map
+							ref.setText(map.get(obj).toString());
+						} else {
+							ref.setText(String.valueOf(map.size()));
+							serializeHelper(f.get(obj), doc, map);
+						}
+						fieldElement.addContent(ref);
 					}
-					fieldElement.addContent(ref);
-				} catch (Exception e) {
-					e.printStackTrace();
+				} else {
+					Element empty = new Element("null");
+					fieldElement.addContent(empty);
 				}
+				node.addContent(fieldElement);
 			}
-
 		}
-		return node;
+		return doc;
+	}
+
+	public void testSerializer(Document doc2) throws FileNotFoundException {
+		XMLOutputter outputter = new XMLOutputter();
 		
+		String output = outputter.outputString(doc2);
+		
+		System.out.println(output);
+		
+		PrintWriter out = new PrintWriter("newest.xml");
+		out.println(output);
+		out.close();
 	}
 }
