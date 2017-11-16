@@ -8,7 +8,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
@@ -92,10 +94,16 @@ public class Sender extends Thread {
 			System.out.println("Invalid number, please try again");
 		}
 		
-		// create xml FILE
+		connect(doc);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void connect(Document doc) throws FileNotFoundException, IOException {
 		XMLOutputter outputter = new XMLOutputter();
 		outputter.output(doc, new FileOutputStream("sendXML.xml"));
-		// try connecting
 		int port = 8080;
 		String address = "127.0.0.1";
 		Socket sock = new Socket(address, port);
@@ -114,12 +122,6 @@ public class Sender extends Thread {
 		
 		in.close();
         sock.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		
 	}
 
 }
