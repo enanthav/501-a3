@@ -16,35 +16,11 @@ public class Deserializer {
 		HashMap map = new HashMap();
 		createInstances(map, objectList);
 		assignFieldValues(map, objectList);
-
 		return map.get("0");
 	}
 
 
-	private void createInstances(HashMap map, List objectList) {
-		// create instances
-		for (Object object : list) {
-			Element obj = (Element) object;
-			Class c = Class.forName(obj.getAttributeValue("class"));
-			Object classInstance = obj;
-			
-			
-			// check if array
-			if (c.isArray()) {
-				classInstance = Array.newInstance(c.getComponentType(), Integer.parseInt(obj.getAttributeValue("length")));
-			} else {
-				classInstance = c.newInstance();
-			}
-			map.put(obj.getAttributeValue("id"), classInstance);
-		} 
-	}
-
-
-	public void deserializeHelper(HashMap map, List list) throws Exception {
-
-		
-		// look at field values
-	
+	public void assignFieldValues(HashMap map, List list) throws Exception {
 		for (Object object : list) {
 			Element obj = (Element) object;
 			Object classInstance = map.get(obj.getAttributeValue("id"));
@@ -112,6 +88,25 @@ public class Deserializer {
 		}
 	}
 }
+
+
+	private void createInstances(HashMap map, List list) throws Exception {
+		// create instances
+		for (Object object : list) {
+			Element obj = (Element) object;
+			Class c = Class.forName(obj.getAttributeValue("class"));
+			Object classInstance = obj;
+			
+			
+			// check if array
+			if (c.isArray()) {
+				classInstance = Array.newInstance(c.getComponentType(), Integer.parseInt(obj.getAttributeValue("length")));
+			} else {
+				classInstance = c.newInstance();
+			}
+			map.put(obj.getAttributeValue("id"), classInstance);
+		} 
+	}
 }
 
 
