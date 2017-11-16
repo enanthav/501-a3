@@ -19,7 +19,7 @@ public class Deserializer {
 	}
 
 
-	public void assignFieldValues(HashMap map, List list) throws Exception {
+	private void assignFieldValues(HashMap map, List list) throws Exception {
 		for (Object object : list) {
 			Element obj = (Element) object;
 			Object classInstance = map.get(obj.getAttributeValue("id"));
