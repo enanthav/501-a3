@@ -1,4 +1,4 @@
-package obj;
+
 import java.util.ArrayList;
 
 public class CollectionObjects {

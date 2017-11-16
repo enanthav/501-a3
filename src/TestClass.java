@@ -4,8 +4,6 @@ import org.jdom2.Document;
 import org.jdom2.output.XMLOutputter;
 import org.junit.jupiter.api.Test;
 
-import obj.*;
-
 import org.junit.After;
 import org.junit.Before;
 

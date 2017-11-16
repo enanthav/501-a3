@@ -1,4 +1,4 @@
-package obj;
+
 
 public class PrimitiveArrayClass {
 	public int[] intArray = new int[3];
@@ -8,4 +8,7 @@ public class PrimitiveArrayClass {
         intArray[1] = input2;
         intArray[2] = input3;
     }
+	public PrimitiveArrayClass() {
+		// TODO Auto-generated constructor stub
+	}
 }

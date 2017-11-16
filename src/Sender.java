@@ -1,4 +1,4 @@
-import obj.*;
+
 import java.util.Scanner;
 
 import org.jdom2.Document;

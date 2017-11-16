@@ -1,4 +1,4 @@
-package obj;
+
 
 public class ObjectClass {
     public PrimitiveClass primObj;

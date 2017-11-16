@@ -1,4 +1,4 @@
-package obj;
+
 public class ArrayObjects {
     private Object[] arrayOfObjRef;
 

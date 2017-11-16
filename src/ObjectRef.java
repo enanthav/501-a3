@@ -1,4 +1,4 @@
-package obj;
+
 public class ObjectRef {
     private PrimitiveClass primObj;
     private int intVar;

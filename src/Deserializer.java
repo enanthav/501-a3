@@ -2,7 +2,6 @@ import java.io.File;
 import java.lang.reflect.*;
 import java.util.HashMap;
 import java.util.List;
-import obj.*;
 
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.*;
