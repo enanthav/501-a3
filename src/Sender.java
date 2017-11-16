@@ -31,9 +31,11 @@ public class Sender extends Thread {
 		System.out.println("[3] Object that Contains a Three Integer Array");
 		System.out.println("[4] Object that Contains an Array of References");
 		System.out.println("[5] Object using Collection Instance\n");
+		System.out.print("> ");
 		
 		try {
 			selection = input.nextInt();
+
 		// create object based on user input
 		if (selection == 1) {
 			System.out.println("Input an integer: ");
@@ -43,11 +45,11 @@ public class Sender extends Thread {
 			System.out.println("True or false: you like cats");
 			boolean inputBool = input.nextBoolean();
 			PrimitiveClass primClass = new PrimitiveClass(inputInt, inputFloat, inputBool);
-			
+			System.out.println("Primitive object created");
 			// serialize here
 			doc = serialize.serialize(primClass);
 		} else if (selection == 2) {
-			System.out.println("Input an integer: ");
+			System.out.println("Set integer value: ");
 			int inputInt = input.nextInt();
 			ObjectRef objReferences = new ObjectRef();
 			objReferences.setIntVar(inputInt);
@@ -64,13 +66,13 @@ public class Sender extends Thread {
 			System.out.println("Third integer: ");
 			int inputInt3 = input.nextInt();
 			PrimitiveArrayClass primArrayObj = new PrimitiveArrayClass(inputInt1, inputInt2, inputInt3);
-			
+			System.out.println("Primitive array object created");
 			// serialize
 			doc = serialize.serialize(primArrayObj);
 		} else if (selection == 4) {
-			System.out.println("Object that contains an array of object references created");
 			Object obj1 = new Object();
 			Object obj2 = new Object();
+			System.out.println("Object that contains an array of object references created");
 			// object that contains an array of object references
 			ArrayObjects arrayObjectRefs = new ArrayObjects();
 			arrayObjectRefs.addObjectToArray(obj1, 0);
@@ -79,10 +81,10 @@ public class Sender extends Thread {
 			//serialize
 			doc = serialize.serialize(arrayObjectRefs);
 		} else if (selection == 5) {
-			System.out.println("Object that contains an instance of Java's collection classes created");
 			// create objects to insert
 			Object obj1 = new Object();
 			Object obj2 = new Object();
+			System.out.println("Object that contains an instance of Java's collection classes created");
 			// object that uses instance of Java's collection classes
 			ArrayObjects arrayObj = new ArrayObjects();
 			arrayObj.addObjectToArray(obj1, 0);
