@@ -94,14 +94,14 @@ public class Sender extends Thread {
 			System.out.println("Invalid number, please try again");
 		}
 		
-		connect(doc);
+		createXMLandSend(doc);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private static void connect(Document doc) throws FileNotFoundException, IOException {
+	private static void createXMLandSend(Document doc) throws FileNotFoundException, IOException {
 		XMLOutputter outputter = new XMLOutputter();
 		outputter.output(doc, new FileOutputStream("sendXML.xml"));
 		int port = 8080;
