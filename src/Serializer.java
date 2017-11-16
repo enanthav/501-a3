@@ -19,8 +19,6 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 public class Serializer {
-
-
 	public org.jdom2.Document serialize(Object obj) throws IllegalArgumentException, IllegalAccessException {
 		IdentityHashMap map = new IdentityHashMap();
 		Element root = new Element("serialized");
